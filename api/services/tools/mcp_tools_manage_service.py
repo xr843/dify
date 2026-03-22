@@ -792,7 +792,11 @@ class MCPToolManageService:
 
         # Check if client_id is masked and unchanged
         final_client_id = client_id
-        if existing_masked.get("client_id") and hmac.compare_digest(client_id, existing_masked["client_id"]):
+        if (
+            existing_masked.get("client_id")
+            and client_id is not None
+            and hmac.compare_digest(client_id, existing_masked["client_id"])
+        ):
             # Use existing decrypted value
             final_client_id = existing_decrypted.get("client_id", client_id)
 

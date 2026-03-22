@@ -127,7 +127,7 @@ class APIBasedExtensionDetailAPI(Resource):
         extension_data_from_db.name = payload.name
         extension_data_from_db.api_endpoint = payload.api_endpoint
 
-        if not hmac.compare_digest(payload.api_key, HIDDEN_VALUE):
+        if payload.api_key is None or not hmac.compare_digest(payload.api_key, HIDDEN_VALUE):
             extension_data_from_db.api_key = payload.api_key
 
         return APIBasedExtensionService.save(extension_data_from_db)
